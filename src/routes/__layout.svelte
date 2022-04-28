@@ -1,9 +1,10 @@
 <script>
 	import Header from '$lib/header/Header.svelte';
 	import '../app.css';
+	import Navbar from '$lib/Navbar.svelte';
 </script>
 
-<Header />
+<Navbar />
 
 <main>
 	<slot />
