@@ -1,5 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/connection');
+const sequelize = require('../.svelte-kit/types/src/routes/signup/config/connection');
 
 class Favorites extends Model {}
 
@@ -16,10 +16,10 @@ Favorites.init(
       allowNull: false,
     },
     address: {
-      type: DataTypes.TEXT
+      type: DataTypes.TEXT,
     },
     website: {
-        type: DataTypes.TEXT
+      type: DataTypes.TEXT,
     },
     user_id: {
       type: DataTypes.INTEGER,

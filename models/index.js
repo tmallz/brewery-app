@@ -1,5 +1,5 @@
-const User = require('./User');
-const Favorites = require('./Favorites');
+const User = require('../.svelte-kit/types/src/routes/signup/models/User');
+const Favorites = require('../.svelte-kit/types/src/routes/signup/models/Favorites');
 
 User.hasMany(Favorites, {
   foreignKey: 'user_id',
