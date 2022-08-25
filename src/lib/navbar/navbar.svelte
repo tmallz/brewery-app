@@ -59,10 +59,8 @@
   <script>
     import { onMount } from 'svelte';
     import{ themeChange } from 'theme-change';
-    import { base } from "$app/paths";
-
+    
     onMount(() => {
         themeChange(false);
     });
-
 </script>
