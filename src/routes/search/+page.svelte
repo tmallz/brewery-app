@@ -14,7 +14,9 @@
     <div class="card w-full bg-base-100 shadow-xl">
         <div class="card-body">
             <h2 class="card-title">{brewery.name}</h2>
-            <p>{brewery.street} {brewery.city}, {brewery.state} {brewery.postal_code.split('-')[0]}</p>
+            <p>{brewery.street} {brewery.city}, {#if brewery.state != null}
+                {brewery.state} {brewery.postal_code.split('-')[0]} 
+            {/if} {brewery.country}</p>
             <a href={brewery.website_url} target = '_blank'>{brewery.website_url}</a>
             <div class="card-actions justify-end">
                 <button class="btn btn-primary">Add to Favorites</button>
