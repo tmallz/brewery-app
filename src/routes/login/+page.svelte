@@ -20,41 +20,28 @@
             </label>
           </div>
           <div class="form-control mt-6">
-            <button class="btn btn-primary" on:click={loginFormHandler}>Login</button>
+            <button class="btn btn-primary" on:click={handleLogin}>Login</button>
           </div>
         </div>
       </div>
 </div>
 
 <script>
-  let loginEmail;
-  let loginPassword;
+  import { supabase } from '$lib/supabaseClient'
 
-  const loginFormHandler = async () => {
-      const email = loginEmail;
-      const password = loginPassword;
+  let loading = false
+  let email
 
-      if(email && password) {
-          const response = await fetch('api/user', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                  email,
-                  password
-              })
-          });
-
-
-          if(response.ok) {
-              document.location.replace('/');
-          } else {
-              alert(response.statusText);
-          }
-      } else {
-          alert('Please enter a valid email and password');
-      }
-
+  const handleLogin = async () => {
+    try {
+      loading = true
+      const { error } = await supabase.auth.signIn({ email })
+      if (error) throw error
+      alert('Check your email for the login link!')
+    } catch (error) {
+      alert(error.error_description || error.message)
+    } finally {
+      loading = false
+    }
   }
 </script>

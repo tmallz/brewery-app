@@ -1,5 +1,10 @@
 <div class = "flex justify-center items-center">
-    <div class="form-control">
+    <div class="tabs">
+        <button class="tab tab-lg tab-lifted focus:tab-active" on:click={reverseList}>Reverse</button> 
+        <button class="tab tab-lg tab-lifted focus:tab-active">Large</button> 
+        <button class="tab tab-lg tab-lifted focus:tab-active">Large</button>
+      </div>
+    <div class="form-control pl-20">
         <div class="input-group">
           <input type="text" placeholder="Search…" class="input input-bordered" on:keydown={handleEnterPress} bind:value={name}/>
           <button class="btn btn-square" on:click={handleButtonClick}>
@@ -27,6 +32,7 @@
 {/each}
 
 
+
 <script>
 import { onMount } from "svelte";
 
@@ -40,6 +46,18 @@ var handleButtonClick = async () => {
                 res.json().then((data) => {
                     fetchedData = data;
                     return fetchedData;
+            })
+        }
+    });
+}
+
+var reverseList = async () => {
+    await fetch(`https://api.openbrewerydb.org/breweries?by_city=${name}`)
+    .then((res) => { 
+        if (res.ok) {
+                res.json().then((data) => {
+                    fetchedData = data;
+                    return fetchedData.reverse();
             })
         }
     });

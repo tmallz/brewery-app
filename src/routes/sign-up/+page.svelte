@@ -9,17 +9,17 @@
           <label class="label" for = "Email">
             <span class="label-text">Email</span>
           </label>
-          <input type="text" placeholder="email" class="input input-bordered" />
+          <input type="text" placeholder="email" class="input input-bordered" bind:value={email}/>
         </div>
         <div class="form-control">
           <label class="label" for = 'Password'>
             <span class="label-text">Password</span>
           </label>
-          <input type="text" placeholder="password" class="input input-bordered" />
+          <input type="password" placeholder="password" class="input input-bordered" bind:value={password}/>
           <label class="label" for = 'Password'>
             <span class="label-text">Confirm Password</span>
           </label>
-          <input type="text" placeholder="confirm password" class="input input-bordered" />
+          <input type="text" placeholder="confirm password" class="input input-bordered" bind:value={confirmPassword} />
           <label class="label" for = "Links">
             <ul>
               <li><a href="/login" class="label-text-alt link link-hover">Have an account already? Log In</a></li>
@@ -27,8 +27,35 @@
           </label>
         </div>
         <div class="form-control mt-6">
-          <button class="btn btn-primary">Login</button>
+          <button class="btn btn-primary" on:submit|preventDefault={signInWithEmail}>Sign Up</button>
         </div>
       </div>
     </div>
 </div>
+
+<script>
+import { goto } from "$app/navigation";
+
+
+  let email;
+  let password;
+  let confirmPassword;
+
+  function passwordMatch()
+  {
+    if(confirmPassword === password)
+    {
+      return true;
+    }
+    return false;
+  }
+
+  async function signInWithEmail() {
+    console.log("trying to log in");
+    const { user, sesion, error} = await supabase.auth.signUp({
+      email: email,
+      password: password,
+    })
+    goto('/search');
+  }
+</script>

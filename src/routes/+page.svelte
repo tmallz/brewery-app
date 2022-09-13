@@ -1,6 +1,6 @@
 <div class="hero min-h-screen bg-base-200">
   <div class="hero-content flex-col lg:flex-row">
-    <img src="https://placeimg.com/260/400/arch" class="max-w-sm rounded-lg shadow-2xl" />
+    <img src="https://placeimg.com/260/400/arch" alt = "pic" class="max-w-sm rounded-lg shadow-2xl" />
     <div>
       <h1 class="text-5xl font-bold">Box Office News!</h1>
       <p class="py-6">Welcome to Brewery-Me. An app that allows you to find breweries near you and wherever you want.</p>
@@ -10,3 +10,14 @@
     </div>
   </div>
 </div>
+
+<script>
+  // import { user } from '$lib/sessionStore'
+  // import { supabase } from '$lib/supabaseClient'
+
+  // user.set(supabase.auth.user())
+
+  // supabase.auth.onAuthStateChange((_, session) => {
+  //   user.set(session.user)
+  // })
+</script>

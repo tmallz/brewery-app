@@ -20,9 +20,10 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@beyonk/async-script-loader": "^2.2.2",
-		"@beyonk/svelte-googlemaps": "^3.2.0",
+		"@googlemaps/js-api-loader": "^1.14.3",
 		"@prisma/client": "^4.2.1",
+		"@supabase/auth-helpers-svelte": "^0.4.5",
+		"@supabase/supabase-js": "^1.35.6",
 		"@sveltejs/adapter-node": "^1.0.0-next.87",
 		"bcrypt": "^5.0.1",
 		"cors": "^2.8.5",
