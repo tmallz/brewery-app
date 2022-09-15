@@ -19,7 +19,7 @@
           <label class="label" for = 'Password'>
             <span class="label-text">Confirm Password</span>
           </label>
-          <input type="text" placeholder="confirm password" class="input input-bordered" bind:value={confirmPassword} />
+          <input type="password" placeholder="confirm password" class="input input-bordered" bind:value={confirmPassword} />
           <label class="label" for = "Links">
             <ul>
               <li><a href="/login" class="label-text-alt link link-hover">Have an account already? Log In</a></li>
@@ -27,7 +27,7 @@
           </label>
         </div>
         <div class="form-control mt-6">
-          <button class="btn btn-primary" on:submit|preventDefault={signInWithEmail}>Sign Up</button>
+          <button class="btn btn-primary" on:click={signInWithEmail}>Sign Up</button>
         </div>
       </div>
     </div>
@@ -35,7 +35,7 @@
 
 <script>
 import { goto } from "$app/navigation";
-
+import {supabase} from "../../lib/supabaseClient"
 
   let email;
   let password;
@@ -50,12 +50,25 @@ import { goto } from "$app/navigation";
     return false;
   }
 
+ var test = () => {
+  console.log("test");
+ }
+
   async function signInWithEmail() {
-    console.log("trying to log in");
-    const { user, sesion, error} = await supabase.auth.signUp({
+    // if(!passwordMatch())
+    // {
+    //   return;
+    // }
+    try{
+      const { user, sesion, error} = await supabase.auth.signUp({
       email: email,
       password: password,
-    })
-    goto('/search');
+      })
+      goto('/search');
+    }catch(error)
+    {
+      console.error(error);
+    }
+
   }
 </script>

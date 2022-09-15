@@ -8,8 +8,12 @@
           <li><a href = "/search">Search</a></li>
           <li><a href = "/favorites">Favorites</a></li>
           <li><a href = "/about-me">About Me</a></li>
-          <li><a href = "/login">Login</a></li>
-          <li><a href = "/sign-up">Sign Up</a></li>
+          {#if $user}
+            <li><button on:click={handleLogOut}>Log Out</button></li>
+          {:else}
+            <li><a href = "/login">Login</a></li>
+            <li><a href = "/sign-up">Sign Up</a></li>
+          {/if}
         </ul>
       </div>
       <div class="mx-50 flex">
@@ -35,8 +39,14 @@
         <li><a href = "/search">Search</a></li>
         <li><a href = "/favorites">Favorites</a></li>
         <li><a href="/about-me">About Me</a></li>
-        <li><a href = "/login">Login</a></li>
-        <li><a href = "/sign-up">Sign Up</a></li>
+        {#key !$user}
+          {#if $user}
+            <li><button on:click={handleLogOut}>Log Out</button></li>
+          {:else}
+            <li><a href = "/login">Login</a></li>
+            <li><a href = "/sign-up">Sign Up</a></li>
+          {/if}
+        {/key}
         <li>     
            <label class="swap swap-rotate">
   
@@ -58,9 +68,28 @@
 
   <script>
     import { onMount } from 'svelte';
-    import{ themeChange } from 'theme-change';
+    import { themeChange } from 'theme-change';
+    import { supabase } from "../supabaseClient";
+    import { user } from "../sessionStore";
+    import { goto } from "$app/navigation";
+    
+    user.set(supabase.auth.user())
+
+    supabase.auth.onAuthStateChange((_, session) => {
+    user.set(session.user)
+    })
     
     onMount(() => {
         themeChange(false);
     });
+    
+    var handleLogOut = async () => {
+      try{
+        const { error } = await supabase.auth.signOut()
+      }catch(error)
+      {
+        console.error('error: ', error);
+      }
+      goto("/home")
+    }
 </script>
