@@ -55,17 +55,17 @@ import {supabase} from "../../lib/supabaseClient"
  }
 
   async function signInWithEmail() {
-    // if(!passwordMatch())
-    // {
-    //   return;
-    // }
+    if(!passwordMatch())
+    {
+      return;
+    }
     try{
       const { user, sesion, error} = await supabase.auth.signUp({
       email: email,
       password: password,
       })
       goto('/search');
-    }catch(error)
+    }catch
     {
       console.error(error);
     }

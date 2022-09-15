@@ -5,13 +5,13 @@
             <label class="label" for = "Email">
               <span class="label-text">Email</span>
             </label>
-            <input type="text" placeholder="email" class="input input-bordered" bind:value={loginEmail}/>
+            <input type="text" placeholder="email" class="input input-bordered" bind:value={email}/>
           </div>
           <div class="form-control">
             <label class="label" for = 'Password'>
               <span class="label-text">Password</span>
             </label>
-            <input type="text" placeholder="password" class="input input-bordered" bind:value={loginPassword}/>
+            <input type="password" placeholder="password" class="input input-bordered" bind:value={password}/>
             <label class="label" for = "Links">
               <ul>
                 <li><a href="#" class="label-text-alt link link-hover">Forgot password?</a></li>
@@ -28,20 +28,22 @@
 
 <script>
   import { supabase } from '$lib/supabaseClient'
+  import { goto } from "$app/navigation";
+  let email = '';
+  let password = '';
 
-  let loading = false
-  let email
-
-  const handleLogin = async () => {
-    try {
-      loading = true
-      const { error } = await supabase.auth.signIn({ email })
-      if (error) throw error
-      alert('Check your email for the login link!')
-    } catch (error) {
-      alert(error.error_description || error.message)
-    } finally {
-      loading = false
+  var handleLogin = async () => {
+    try{
+      const { user, error } = await supabase.auth.signIn({
+      email: email,
+      password: password
+      })
+      goto('/search')
+    }catch
+    {
+      console.error(error)
     }
+
+
   }
 </script>
