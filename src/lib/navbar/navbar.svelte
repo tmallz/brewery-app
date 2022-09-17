@@ -75,8 +75,8 @@
     
     user.set(supabase.auth.user())
 
-    supabase.auth.onAuthStateChange((_, session) => {
-    user.set(session.user)
+    supabase.auth.onAuthStateChange((event, session) => {
+      user.set(session.user)
     })
     
     onMount(() => {
@@ -91,5 +91,6 @@
         console.error('error: ', error);
       }
       goto("/home")
+      location.reload();
     }
 </script>
