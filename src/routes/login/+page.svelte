@@ -18,7 +18,7 @@
 
 	var handleEnterPress = async e => {
 		if (e.keyCode === 13) {
-			signInWithEmail();
+			handleLogin();
 		}
 	};
 </script>

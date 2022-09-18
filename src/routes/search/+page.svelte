@@ -42,8 +42,6 @@
 	};
 
 	var handleSaveToFavorites = async index => {
-		console.log(fetchedData, index);
-
 		breweryName = fetchedData[index].name;
 		breweryAddress =
 			fetchedData[index].street +
@@ -54,8 +52,6 @@
 			' ' +
 			fetchedData[index].postal_code.split('-')[0];
 		breweryWebsite = fetchedData[index].website_url;
-
-		console.log(breweryName, breweryAddress, breweryWebsite);
 
 		if (breweryName && breweryAddress && breweryWebsite) {
 			try {
