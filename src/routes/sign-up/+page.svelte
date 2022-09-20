@@ -22,6 +22,9 @@
 				email: email,
 				password: password,
 			});
+			if (error) {
+				throw error;
+			}
 			goto('/search');
 		} catch {
 			console.error(error);

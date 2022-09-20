@@ -8,8 +8,10 @@
 	let breweryName;
 	let breweryAddress;
 	let breweryWebsite;
+	let thisUser = supabase.auth.user();
 
 	var handleButtonClick = async () => {
+		console.log(thisUser.id);
 		await fetch(`https://api.openbrewerydb.org/breweries?by_city=${name}`).then(
 			res => {
 				if (res.ok) {
@@ -59,22 +61,11 @@
 					name: breweryName,
 					address: breweryAddress,
 					website: breweryWebsite,
+					user_id: supabase.auth.user().id,
 				});
 			} catch {
 				console.error(error);
 			}
-		}
-	};
-
-	var testPostToFavorites = async () => {
-		try {
-			const { data, error } = await supabase.from('favorites').insert({
-				name: 'breweryName',
-				address: 'breweryAddress',
-				website: 'breweryWebsite',
-			});
-		} catch (error) {
-			console.error(error);
 		}
 	};
 
@@ -143,5 +134,3 @@
 		</div>
 	</div>
 {/each}
-
-<button on:click={testPostToFavorites}>click</button>
