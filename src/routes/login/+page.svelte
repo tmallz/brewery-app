@@ -14,15 +14,13 @@
 				throw error;
 			}
 			goto('/search');
-		} catch {
+		} catch (error) {
 			console.error(error);
 		}
 	};
 
 	var handleEnterPress = async e => {
-		if (e.keyCode === 13) {
-			handleLogin();
-		}
+		return e.keyCode === 13 ? handleButtonClick() : null;
 	};
 </script>
 

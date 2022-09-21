@@ -8,10 +8,9 @@
 	let breweryName;
 	let breweryAddress;
 	let breweryWebsite;
-	let thisUser = supabase.auth.user();
+	let currentCoordinates;
 
 	var handleButtonClick = async () => {
-		console.log(thisUser.id);
 		await fetch(`https://api.openbrewerydb.org/breweries?by_city=${name}`).then(
 			res => {
 				if (res.ok) {
@@ -24,23 +23,9 @@
 		);
 	};
 
-	var reverseList = async () => {
-		await fetch(`https://api.openbrewerydb.org/breweries?by_city=${name}`).then(
-			res => {
-				if (res.ok) {
-					res.json().then(data => {
-						fetchedData = data;
-						return fetchedData.reverse();
-					});
-				}
-			}
-		);
-	};
-
-	var handleEnterPress = async e => {
-		if (e.keyCode === 13) {
-			handleButtonClick();
-		}
+	var reverseList = () => {
+		fetchedData = fetchedData.reverse();
+		return fetchedData;
 	};
 
 	var handleSaveToFavorites = async index => {
@@ -63,22 +48,50 @@
 					website: breweryWebsite,
 					user_id: supabase.auth.user().id,
 				});
-			} catch {
+				if (error) {
+					throw error;
+				}
+			} catch (error) {
 				console.error(error);
 			}
 		}
 	};
 
+	var handleLatLong = async () => {
+		let cords;
+		getLocation();
+		console.log(currentCoordinates);
+		console.log('please');
+	};
+
+	function getLocation() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(setCoorinates);
+		} else {
+		}
+	}
+
+	var setCoorinates = position => {
+		currentCoordinates = position.coords;
+	};
+
+	var handleEnterPress = async e => {
+		return e.keyCode === 13 ? handleButtonClick() : null;
+	};
 	onMount(handleButtonClick);
 </script>
 
+<div id="demo" />
 <div class="flex justify-center items-center">
 	<div class="tabs">
 		<button
 			class="tab tab-lg tab-lifted focus:tab-active"
 			on:click={reverseList}>Reverse</button
 		>
-		<button class="tab tab-lg tab-lifted focus:tab-active">Large</button>
+		<button
+			class="tab tab-lg tab-lifted focus:tab-active"
+			on:click={handleLatLong}>Closest Breweries</button
+		>
 		<button class="tab tab-lg tab-lifted focus:tab-active">Large</button>
 	</div>
 	<div class="form-control pl-20">
@@ -109,28 +122,31 @@
 	</div>
 </div>
 
-{#each fetchedData as brewery, index (fetchedData.indexOf(brewery))}
-	<div class="w-full px-20 pt-5">
-		<div class="card w-full bg-base-100 shadow-xl">
-			<div class="card-body">
-				<h2 class="card-title">{brewery.name}</h2>
-				<p>
-					{brewery.street}
-					{brewery.city}, {#if brewery.state != null}
-						{brewery.state} {brewery.postal_code.split('-')[0]}
+{#key reverseList}
+	{#each fetchedData as brewery, index (fetchedData.indexOf(brewery))}
+		<div class="w-full px-20 pt-5">
+			<div class="card w-full bg-base-100 shadow-xl">
+				<div class="card-body">
+					<h2 class="card-title">{brewery.name}</h2>
+					<p>
+						{brewery.street}
+						{brewery.city}, {#if brewery.state != null}
+							{brewery.state} {brewery.postal_code.split('-')[0]}
+						{/if}
+						{brewery.country}
+					</p>
+					<a href={brewery.website_url} target="_blank">{brewery.website_url}</a
+					>
+					{#if $user}
+						<div class="card-actions justify-end">
+							<button
+								class="btn btn-primary"
+								on:click={handleSaveToFavorites(index)}>Add to Favorites</button
+							>
+						</div>
 					{/if}
-					{brewery.country}
-				</p>
-				<a href={brewery.website_url} target="_blank">{brewery.website_url}</a>
-				{#if $user}
-					<div class="card-actions justify-end">
-						<button
-							class="btn btn-primary"
-							on:click={handleSaveToFavorites(index)}>Add to Favorites</button
-						>
-					</div>
-				{/if}
+				</div>
 			</div>
 		</div>
-	</div>
-{/each}
+	{/each}
+{/key}

@@ -22,9 +22,6 @@
 				email: email,
 				password: password,
 			});
-			if (error) {
-				throw error;
-			}
 			goto('/search');
 		} catch {
 			console.error(error);
@@ -32,9 +29,7 @@
 	}
 
 	var handleEnterPress = async e => {
-		if (e.keyCode === 13) {
-			signInWithEmail();
-		}
+		return e.keyCode === 13 ? handleButtonClick() : null;
 	};
 </script>
 
