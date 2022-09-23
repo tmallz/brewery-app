@@ -52,7 +52,7 @@
 				<label class="label" for="Links">
 					<ul>
 						<li>
-							<a href="#" class="label-text-alt link link-hover"
+							<a href="/password-reset" class="label-text-alt link link-hover"
 								>Forgot password?</a
 							>
 						</li>

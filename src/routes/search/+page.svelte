@@ -42,7 +42,7 @@
 
 		if (breweryName && breweryAddress && breweryWebsite) {
 			try {
-				const { data, error } = await supabase.from('favorites').insert({
+				const { error } = await supabase.from('favorites').insert({
 					name: breweryName,
 					address: breweryAddress,
 					website: breweryWebsite,
@@ -57,22 +57,33 @@
 		}
 	};
 
-	var handleLatLong = async () => {
-		let cords;
-		getLocation();
-		console.log(currentCoordinates);
-		console.log('please');
-	};
-
-	function getLocation() {
+	var handleLatLong = () => {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(setCoorinates);
 		} else {
+			alert('Acces to location denied');
 		}
-	}
+	};
 
 	var setCoorinates = position => {
-		currentCoordinates = position.coords;
+		let lat = position.coords.latitude;
+		let long = position.coords.longitude;
+		fetchClosestBreweries(lat, long);
+	};
+
+	var fetchClosestBreweries = async (latitude, longitude) => {
+		let lat = latitude;
+		let long = longitude;
+		await fetch(
+			`https://api.openbrewerydb.org/breweries?by_dist=${lat},${long}`
+		).then(res => {
+			if (res.ok) {
+				res.json().then(data => {
+					fetchedData = data;
+					return fetchedData;
+				});
+			}
+		});
 	};
 
 	var handleEnterPress = async e => {
@@ -81,7 +92,6 @@
 	onMount(handleButtonClick);
 </script>
 
-<div id="demo" />
 <div class="flex justify-center items-center">
 	<div class="tabs">
 		<button
