@@ -1,4 +1,45 @@
 <script>
+	import Flatpickr from 'svelte-flatpickr';
+	import 'flatpickr/dist/flatpickr.css';
+	import { goto } from '$app/navigation';
+
+	let value, formattedValue;
+
+	const options = {
+		onChange(selectedDates, dateStr) {
+			console.log('flatpickr hook', selectedDates, dateStr);
+		},
+	};
+
+	$: console.log({ value, formattedValue });
+
+	function handleChange(event) {
+		const [selectedDates, dateStr] = event.detail;
+		console.log({ selectedDates, dateStr });
+	}
+
+	var handleEnterButton = () => {
+		var age = calculateAge(value);
+		if (age >= 21) {
+			goto('/search');
+		} else if (age === null) {
+			window.alert('must select a date');
+		} else {
+			document.location.replace('google.com');
+		}
+	};
+
+	function calculateAge(birthday) {
+		// birthday is a date
+		console.log(birthday);
+		if (birthday === null || birthday === '') {
+			return null;
+		} else {
+			var ageDifMs = Date.now() - birthday.getTime();
+			var ageDate = new Date(ageDifMs); // miliseconds from epoch
+			return Math.abs(ageDate.getUTCFullYear() - 1970);
+		}
+	}
 </script>
 
 <div class="hero min-h-screen bg-base-200">
@@ -14,9 +55,17 @@
 				Welcome to Brewery-Me. An app that allows you to find breweries near you
 				and wherever you want.
 			</p>
-			<!-- TODO: ADD A DATE PICKER-->
+			<Flatpickr
+				{options}
+				bind:value
+				bind:formattedValue
+				on:change={handleChange}
+				name="date"
+				class="text-black"
+			/>
 			<p>Please enter your Date of Birth</p>
-			<button class="btn btn-primary">Enter</button>
+			<button class="btn btn-primary" on:click={handleEnterButton}>Enter</button
+			>
 		</div>
 	</div>
 </div>

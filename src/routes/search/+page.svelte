@@ -8,7 +8,6 @@
 	let breweryName;
 	let breweryAddress;
 	let breweryWebsite;
-	let currentCoordinates;
 
 	var handleButtonClick = async () => {
 		await fetch(`https://api.openbrewerydb.org/breweries?by_city=${name}`).then(
@@ -16,6 +15,7 @@
 				if (res.ok) {
 					res.json().then(data => {
 						fetchedData = data;
+						console.log(fetchedData);
 						return fetchedData;
 					});
 				}
