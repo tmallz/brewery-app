@@ -21,7 +21,7 @@
 		} catch (error) {
 			console.error('error: ', error);
 		}
-		goto('/home');
+		goto('/search');
 		location.reload();
 	};
 </script>
@@ -60,7 +60,7 @@
 			</ul>
 		</div>
 		<div class="mx-50 flex">
-			<a href="/home" class="btn btn-ghost normal-case text-xl">
+			<a href="/search" class="btn btn-ghost normal-case text-xl">
 				<img
 					src="https://icons.iconarchive.com/icons/sonya/swarm/256/Beer-icon.png"
 					alt="Logo"
