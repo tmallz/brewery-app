@@ -11,6 +11,8 @@
 	$: center = $locationStore;
 	$: markers = $markerStore;
 	$: infoWindows = $infoWindowStore;
+	let marker;
+	let infoWindow;
 
 	onMount(async () => {
 		map = new google.maps.Map(container, {
@@ -20,10 +22,12 @@
 		const infowindow = new google.maps.InfoWindow({
 			content: 'test',
 		});
-		const marker = new google.maps.Marker({
-			position: center,
-			map: map,
-		});
+		for (let i = 0; i < markers.length; i++) {
+			marker = new google.maps.Marker({
+				position: new google.maps.LatLng(markers[i].lat, markers[i].lng),
+				map: map,
+			});
+		}
 		marker.addListener('click', () => {
 			infowindow.open({
 				anchor: marker,

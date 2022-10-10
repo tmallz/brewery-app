@@ -124,7 +124,7 @@
 		try {
 			await fetch(`https://api.api-ninjas.com/v1/geocoding?city=${name}`, {
 				method: 'GET',
-				headers: { 'X-Api-Key': '' },
+				headers: { 'X-Api-Key': 'o36aDOQ24FqumLdXtlvcUw==xjIwLom1petLCRrN' },
 			}).then(res => {
 				if (res.ok) {
 					res.json().then(data => {
