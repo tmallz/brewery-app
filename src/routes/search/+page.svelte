@@ -102,7 +102,6 @@
 			class="tab tab-lg tab-lifted focus:tab-active"
 			on:click={handleLatLong}>Closest Breweries</button
 		>
-		<button class="tab tab-lg tab-lifted focus:tab-active">Large</button>
 	</div>
 	<div class="form-control pl-20">
 		<div class="input-group">

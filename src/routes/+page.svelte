@@ -4,14 +4,13 @@
 	import { goto } from '$app/navigation';
 
 	let value, formattedValue;
+	let isModalOpen = false;
 
 	const options = {
 		onChange(selectedDates, dateStr) {
 			console.log('flatpickr hook', selectedDates, dateStr);
 		},
 	};
-
-	$: console.log({ value, formattedValue });
 
 	function handleChange(event) {
 		const [selectedDates, dateStr] = event.detail;
@@ -25,7 +24,7 @@
 		} else if (age === null) {
 			window.alert('must select a date');
 		} else {
-			document.location.replace('google.com');
+			isModalOpen = true;
 		}
 	};
 
@@ -66,6 +65,23 @@
 			<p>Please enter your Date of Birth</p>
 			<button class="btn btn-primary" on:click={handleEnterButton}>Enter</button
 			>
+		</div>
+	</div>
+</div>
+
+<input
+	type="checkbox"
+	id="my-modal"
+	class="modal-toggle"
+	bind:checked={isModalOpen}
+/>
+<div class="modal">
+	<div class="modal-box">
+		<h3 class="font-bold text-lg">
+			Sorry you must be 21 or older to use BrewerMe
+		</h3>
+		<div class="modal-action">
+			<label for="my-modal" class="btn">Close</label>
 		</div>
 	</div>
 </div>
