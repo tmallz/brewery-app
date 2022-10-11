@@ -35,9 +35,6 @@
 
 <div class="hero min-h-screen bg-base-200">
 	<div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-		<div class="text-center lg:text-left">
-			<h1 class="text-5xl font-bold">Sign Up now!</h1>
-		</div>
 		<div class="card-body">
 			<div class="form-control">
 				<label class="label" for="Email">
